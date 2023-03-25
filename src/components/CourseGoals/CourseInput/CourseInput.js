@@ -4,10 +4,13 @@ import Button from "../../UI/Button/Button";
 import "./CourseInput.css";
 
 const CourseInput = (props) => {
-  const [enteredValue, setEnteredValue] = useState("");
+  const [enteredValue, setEnteredValue] = useState(" ");
   const [isValid, setIsValid] = useState(true);
 
   const goalInputChangeHandler = (event) => {
+    if (enteredValue.trim().length > 0) {
+      setIsValid(true);
+    }
     setEnteredValue(event.target.value);
   };
 
@@ -17,7 +20,7 @@ const CourseInput = (props) => {
       setIsValid(false);
       return;
     }
-    setIsValid(true);
+
     props.onAddGoal(enteredValue);
   };
 
@@ -27,8 +30,11 @@ const CourseInput = (props) => {
         <labe style={{ color: !isValid ? "red" : "black" }}>Course Goal</labe>
         <input
           type="text"
-          style={{ color: !isValid ? "red" : "black" }}
-          maonChange={goalInputChangeHandler}
+          style={{
+            borderColor: !isValid ? "red" : "#ccc",
+            background: !isValid ? "red" : "white",
+          }}
+          onChange={goalInputChangeHandler}
         />
       </div>
       <Button type="submit">Add Goal</Button>
